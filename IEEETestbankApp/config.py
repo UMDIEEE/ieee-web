@@ -18,6 +18,9 @@ SQLALCHEMY_POOL_RECYCLE = 200
 # early.
 SQLALCHEMY_POOL_SIZE = 1
 
+# Prevent overflowing (e.g. adding extra connections):
+SQLALCHEMY_MAX_OVERFLOW = 0
+
 # CAS Configuration
 CAS_SERVER = "https://login.umd.edu"
 CAS_AFTER_LOGIN = "route_root"
