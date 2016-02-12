@@ -3,7 +3,7 @@
 {% from "security/_macros.html" import render_field_with_errors, render_field %}
 {% include "security/_messages.html" %}
 {% block content %}
-<form class="form-signin" ction="{{ url_for_security('umdregister') }}" method="POST" name="register_user_form">
+<form class="form-signin" ction="{{ url_for('umdregister') }}" method="POST" name="register_user_form">
   <h1>Register</h1>
   Hi, <b>{{ username }}</b>! (If this isn't you, please <a href="/cas/logout">logout</a>!)
   <br />
