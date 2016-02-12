@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Register{% endblock %}
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+{% include "security/_messages.html" %}
+{% block content %}
+<form class="form-signin" ction="{{ url_for_security('register') }}" method="POST" name="register_user_form">
+  <h1>Register</h1>
+  Hi, <b>{{ username }}</b>! (If this isn't you, please <a href="/cas/logout">logout</a>!)
+  <br />
+  Please complete your profile below.
+  <br />
+  {{ register_user_form.hidden_tag() }}
+  {% if register_user_form.csrf_token.errors %}
+    <div class="warning">You have submitted an invalid CSRF token</div>
+  {% endif %}
+  {{ render_field_with_errors(register_user_form.first_name) }}
+  {{ render_field_with_errors(register_user_form.last_name) }}
+  {{ render_field_with_errors(register_user_form.major) }}
+  {{ render_field_with_errors(register_user_form.grad_semester) }}
+  {{ render_field_with_errors(register_user_form.grad_year) }}
+  {{ render_field(register_user_form.submit) }}
+</form>
+{% endblock %}

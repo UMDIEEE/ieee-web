@@ -19,8 +19,15 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True)
     username = db.Column(db.String(255), unique=True)
-    password = db.Column(db.String(255))
+    #password = db.Column(db.String(255))
     active = db.Column(db.Boolean())
+    
+    # User data models
+    first_name = db.Column(db.String(255))
+    last_name = db.Column(db.String(255))
+    major = db.Column(db.String(20))
+    grad_semester = db.Column(db.String(10))
+    grad_year = db.Column(db.Integer)
     
     # Confirmation model
     confirmed_at = db.Column(db.DateTime())

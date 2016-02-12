@@ -3,6 +3,8 @@
   <p>
     {{ render_bootstrap_field(field) }}
     {# {{ field.label }} {{ field(**kwargs)|safe }} #}
+    
+    {# Commented out since errors are already handled in bootstrap macros
     {% if field.errors %}
       <ul>
       {% for error in field.errors %}
@@ -10,6 +12,7 @@
       {% endfor %}
       </ul>
     {% endif %}
+    #}
   </p>
 {% endmacro %}
 
