@@ -7,7 +7,8 @@ major_choices = [ ("elecengr", "Electrical Engineering"),
                   ("other",    "Other")
                 ]
 
-grad_semester_choices = [ ("fall", "Fall"), ("spring", "Spring") ]
+grad_semester_choices = [ ("fall", "Fall"), ("winter", "Winter"),
+                          ("spring", "Spring"), ("summer", "Summer") ]
 
 class ExtendedConfirmRegisterForm(ConfirmRegisterForm):
     first_name = StringField('First Name', [Required()])
