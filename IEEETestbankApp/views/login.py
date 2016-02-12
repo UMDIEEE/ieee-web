@@ -4,6 +4,7 @@ from flask.ext.security.utils import login_user
 
 from IEEETestbankApp import app, cas
 from IEEETestbankApp.models.auth import User, Role
+from IEEETestbankApp.models.db import db, initDatabase
 from IEEETestbankApp.forms import *
 from IEEETestbankApp.security import *
 
@@ -11,7 +12,7 @@ from IEEETestbankApp.security import *
 @cas_login_required
 def login_umd():
     print("Login succeeded: username = '%s', attributes='%s'" % (cas.username, str(cas.attributes)))
-    
+    initDatabase()
     user_search = User.query.filter_by(username=cas.username).first()
     target_user = user_datastore.find_user(username = cas.username)
     print(user_search)
@@ -31,6 +32,7 @@ def login_umd():
 @app.route('/umdregister', methods=['GET', 'POST'])
 @cas_login_required
 def umdregister():
+    initDatabase()
     form = UMDConfirmRegisterForm(request.form)
     print("Login succeeded: username = '%s', attributes='%s'" % (cas.username, str(cas.attributes)))
     user_search = User.query.filter_by(username=cas.username).first()
