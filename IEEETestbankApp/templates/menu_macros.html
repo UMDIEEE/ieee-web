@@ -1,0 +1,5 @@
+{% macro render_menu() -%}
+    {%- for item in current_menu.children %}
+        {% if item.active %}*{% endif %}{{ item.text }}
+    {% endfor -%}
+{%- endmacro %}

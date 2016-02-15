@@ -1,3 +1,5 @@
+{% from "_menu_macros.html" import render_main_menu with context %}
+{# NOTE: "with context" is required, since Jinja2 omits it by default #}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,24 +10,24 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="static/favicon.ico">
+    <link rel="icon" href="/static/favicon.ico">
 
     <title>{% block title %}{% endblock %} - IEEE@UMD Testbank</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
     
     <!-- CSS for icon fonts -->
-    <link href="static/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
     
     <!-- CSS for checkbox styling -->
-    <link href="static/css/awesome-bootstrap-checkbox.css" rel="stylesheet">
+    <link href="/static/css/awesome-bootstrap-checkbox.css" rel="stylesheet">
     
     <!-- Custom styles for this template -->
-    <link href="static/css/main.css" rel="stylesheet">
+    <link href="/static/css/main.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -33,10 +35,10 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     {% endblock %}
+    {% block head_extra %}{% endblock %}
   </head>
 
   <body>
-    
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -50,31 +52,65 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-left">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="#about">Browse</a></li>
-            <li><a href="#contact">Submit</a></li>
+            {{ render_main_menu() }}
           </ul>
           
           <ul class="nav navbar-nav navbar-right">
+              {% if current_user.is_authenticated %}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ current_user.first_name }} ({{ current_user.username }}) <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">User</li>
+                    <li><a href="/logout">View Your Exams</a></li>
+                    <li><a href="/logout">View/Edit Your Profile</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li class="dropdown-header">Actions</li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+              </li>
+              {% else %}
               <li><a href="/login">Login</a></li>
+              {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-warning alert-dismissible fade in">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+    
+    {% block precontent %}
+    {% endblock %}
+    
+    {% block container %}
     <div class="container">
       {% block content %}
       {% endblock %}
     </div><!-- /.container -->
-
-
+    {% endblock %}
+    
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="static/js/bootstrap.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="static/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
+    
+    {% block scripts %}{% endblock %}
+    
   </body>
 </html>

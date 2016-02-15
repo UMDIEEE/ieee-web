@@ -3,14 +3,11 @@ from flask.ext.security import login_required, current_user
 from flask_menu import register_menu
 from IEEETestbankApp import app
 
-# Home page
+# Browse page
 
 # Views
-@app.route('/')
-@register_menu(app, 'main.home', 'Home', order = 0)
-def home():
+@app.route('/submit')
+@register_menu(app, 'main.submit', 'Submit', order = 2)
+def submit():
     return render_template('search.html', user = current_user)
 
-@app.route('/debug')
-def debug():
-    raise

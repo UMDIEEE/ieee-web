@@ -21,6 +21,9 @@ SQLALCHEMY_POOL_SIZE = 2
 # Prevent overflowing (e.g. adding extra connections):
 SQLALCHEMY_MAX_OVERFLOW = 0
 
+# Disable query tracking (not needed, wasteful):
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+
 # CAS Configuration
 CAS_SERVER = "https://login.umd.edu"
 CAS_AFTER_LOGIN = "route_root"

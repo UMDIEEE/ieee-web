@@ -1,0 +1,35 @@
+{% extends "admin/dashboard.html" %}
+{% block dashtitle %}Users{% endblock %}
+{% block settingspane %}
+          <h2 class="sub-header">List of Users</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Name</th>
+                  <th>Graduation</th>
+                  <th>Active?</th>
+                  <th>Last Login</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for user_entry in user_list %}
+                <tr class="{{ loop.cycle('rodd', 'reven') }}">
+                  <td>{{ user_entry.id }}</td>
+                  <td>{{ user_entry.username }}</td>
+                  <td>{{ user_entry.email }}</td>
+                  <td>{{ user_entry.first_name }} {{ user_entry.last_name }}</td>
+                  <td>{{ user_entry.grad_semester }} {{ user_entry.grad_year }}</td>
+                  <td>{{ user_entry.active }}</td>
+                  <td>{{ user_entry.last_login_at }}</td>
+                  <td>[x]</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+{% endblock %}

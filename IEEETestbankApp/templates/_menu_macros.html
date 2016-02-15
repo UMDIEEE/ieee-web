@@ -1,0 +1,25 @@
+{% macro render_main_menu() -%}
+    {%- for item in current_menu.submenu('main.').children %}
+        {% if item.visible %}
+        <li{% if item.active %} class="active"{% endif %}><a href="{{ item.url }}">{{ item.text }}</a></li>
+        {% endif %}
+    {% endfor -%}
+{%- endmacro %}
+
+{% macro render_admin_menu() -%}
+    {%- for item in current_menu.submenu('main.admin.').children %}
+        <ul class="nav nav-sidebar">
+        {% if item.visible %}
+            <li{% if item.active %} class="active"{% endif %}><a href="{{ item.url }}">{{ item.text }}</a></li>
+            
+            {% if item.children|length > 0 %}
+                <ul class="nav nav-sidebar-sub">
+                    {% for subitem in item.children %}
+                        <li{% if subitem.active %} class="active"{% endif %}><a href="{{ subitem.url }}">{{ subitem.text }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+        </ul>
+    {% endfor -%}
+{%- endmacro %}

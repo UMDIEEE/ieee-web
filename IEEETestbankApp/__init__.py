@@ -2,9 +2,11 @@ import os
 
 from flask import Flask
 from flask.ext.cas import CAS
+from flask_menu import Menu
 
 app = Flask(__name__)
 cas = CAS(app, '/cas')
+menu = Menu(app = app)
 
 # Create app
 app.config.from_pyfile('config.py', silent=True)

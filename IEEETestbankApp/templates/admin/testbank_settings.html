@@ -1,0 +1,12 @@
+{% extends "admin/dashboard.html" %}
+{% block dashtitle %}Testbank Settings{% endblock %}
+{% block settingspane %}
+          <h2 class="sub-header">Google Drive</h2>
+          {% if config_gdrive_cred %}
+          <b>Google Drive has been linked to the IEEE Testbank.</b>
+          {% else %}
+          <b>Google Drive has <span style="color: red;">NOT</span> been linked to the IEEE@UMD Testbank.</b><br />
+          <a href="{{ url_for('gdrive_auth') }}" class="btn btn-success">Link Google Drive to IEEE@UMD Testbank</a>
+          {% endif %}
+          
+{% endblock %}
