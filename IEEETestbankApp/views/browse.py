@@ -4,10 +4,9 @@ from flask_menu import register_menu
 from IEEETestbankApp import app
 from IEEETestbankApp.models.auth import Config
 
-from apiclient import discovery
+from apiclient import discovery, errors
 from oauth2client import client
 import httplib2
-import errors
 
 # Browse page
 
@@ -31,7 +30,7 @@ def retrieve_all_files(service, folder_id):
             
             #result.extend(files['items'])
             for f in files['items']:
-                if f.mimeType == "application/vnd.google-apps.folder":
+                if f.get('mimeType') == "application/vnd.google-apps.folder":
                     result_folders.append([f.title, copy.deepcopy(f)])
                 else:
                     result_files.append([f.title, copy.deepcopy(f)])
