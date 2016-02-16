@@ -27,7 +27,7 @@ def retrieve_all_files(service, folder_id):
             param = {}
             if page_token:
                 param['pageToken'] = page_token
-            files = service.children().list(folderId = folder_id, **param).execute()
+            files = service.files().list(**param).setQ("'%s' in parents" % folder_id).execute()
             
             #result.extend(files['items'])
             for f in files['items']:
