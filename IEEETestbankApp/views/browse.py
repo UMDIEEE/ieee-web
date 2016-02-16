@@ -65,12 +65,14 @@ def retrieve_all_files(service, path, folder_id):
         
         if len(path) != old_path_len:
             # Traverse again!
-            pass
+            print("[browse.py] Found %s with ID %s!" % (path[0], folder_id))
+            page_token = None
         else:
             print("[browse.py] Could not locate directory, bailing.")
             flash("Base directory not found!")
             results_folders = []
             results_files = []
+            break
     
     # Sort by name, case-insensitive
     result_folders = sorted(result_folders, key=(lambda t: t[0].lower()))
