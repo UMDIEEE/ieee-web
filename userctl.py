@@ -1,6 +1,6 @@
 from IEEETestbankApp.security import user_datastore, security
 from IEEETestbankApp.models.db import db, initDatabase
-from IEEETestbankApp.models.auth import User, Role
+from IEEETestbankApp.models.auth import User, Role, Config
 from IEEETestbankApp.forms.security.register import major_choices, \
                                              grad_semester_choices
 
@@ -194,6 +194,17 @@ def listRoles():
         print("   %s" % (role.description))
     print("")
 
+def listConfig():
+    configs = Config.query.all()
+    
+    print("Configuration:")
+    print("==============")
+    for config in configs:
+        print(" * %s" % (config.name))
+        print("   %s" % (config.description))
+        print("   %s" % (config.value))
+    print("")
+
 def main():
     while 1:
         menu_opts = [
@@ -203,6 +214,7 @@ def main():
                         [removeRoleFromUser, "Remove Role from User"],
                         [listUsers,          "List Users"],
                         [listRoles,          "List Roles"],
+                        [listConfig,          "List Config"],
                         [deleteUser,         "Delete User"],
                         [sys.exit,           "Exit"],
                     ]
