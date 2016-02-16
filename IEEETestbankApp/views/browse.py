@@ -24,12 +24,14 @@ def retrieve_all_files(service, path, folder_id):
     
     path = [p for p in path.split("/") if p.strip() != ""]
     old_path_len = len(path)
+    cur_path = path[0]
+    got_path = False
     
-    while len(path) > 0:
+    while (len(path) > 0) or (got_path):
         result_folders = []
         result_files   = []
         
-        print("[browse.py] Searching for: %s" % path[0])
+        print("[browse.py] Searching for: %s" % cur_path)
         while True:
             try:
                 param = {}
@@ -43,7 +45,7 @@ def retrieve_all_files(service, path, folder_id):
                     print("ENTRY: %s" % str(f))
                     if f.get('mimeType') == "application/vnd.google-apps.folder":
                         if f.get('title') != None:
-                            if f.get('title') == path[0]:
+                            if (not got_path) and (f.get('title') == cur_path):
                                 folder_id = f.get('id')
                                 path = path[1:]
                                 break
@@ -65,9 +67,17 @@ def retrieve_all_files(service, path, folder_id):
         
         if len(path) != old_path_len:
             # Traverse again!
-            print("[browse.py] Found %s with ID %s!" % (path[0], folder_id))
+            print("[browse.py] Found %s with ID %s!" % (cur_path, folder_id))
             page_token = None
+            old_path_len = len(path)
+            
+            if len(path) != 0:
+                cur_path = path[0]
         else:
+            if len(path) == 0:
+                if got_path:
+                    break
+            
             print("[browse.py] Could not locate directory, bailing.")
             flash("Base directory not found!")
             results_folders = []
