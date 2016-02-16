@@ -97,7 +97,8 @@ def retrieve_all_files(service, path, folder_id):
     return result_folders, result_files
 
 # Views
-@app.route('/browse')
+@app.route('/browse', defaults={'path': ''})
+@app.route('/browse<path:path>')
 @register_menu(app, 'main.browse', 'Browse', order = 1)
 def browse():
     config_gdrive_cred = Config.query.filter_by(name='gdrive_oauth2_credentials').first()
@@ -114,7 +115,7 @@ def browse():
     credentials = client.OAuth2Credentials.from_json(config_gdrive_cred.value)
     http_auth = credentials.authorize(httplib2.Http())
     drive_service = discovery.build('drive', 'v2', http_auth)
-    folders_list, files_list = retrieve_all_files(drive_service, config_gdrive_folder.value, "root")
+    folders_list, files_list = retrieve_all_files(drive_service, os.path.join(config_gdrive_folder.value, path), "root")
     
     print(folders_list)
     print(files_list)
