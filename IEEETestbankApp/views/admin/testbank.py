@@ -83,9 +83,13 @@ def gdrive_oauth2callback():
     else:
         auth_code = request.args.get('code')
         credentials = flow.step2_exchange(auth_code)
-        new_cred = Config(name = 'gdrive_oauth2_credentials',
-                            value = credentials.to_json(),
-                            description = "IEEE@UMD Testbank <-> Google Drive Credentials")
-        db.session.add(new_cred)
+        config_gdrive_cred = Config.query.filter_by(name='gdrive_oauth2_credentials').first()
+        if config_gdrive_cred != None:
+            config_gdrive_cred.value = credentials.to_json()
+        else:
+            new_cred = Config(name = 'gdrive_oauth2_credentials',
+                                value = credentials.to_json(),
+                                description = "IEEE@UMD Testbank <-> Google Drive Credentials")
+            db.session.add(new_cred)
         db.session.commit()
         return redirect(url_for('gdrive_auth'))
