@@ -22,7 +22,7 @@ def retrieve_all_files(service, folder_id):
             param = {}
             if page_token:
                 param['pageToken'] = page_token
-            files = service.files().list(folderId = folder_id, **param).execute()
+            files = service.children().list(folderId = folder_id, **param).execute()
             
             #result.extend(files['items'])
             for f in files['items']:
@@ -57,7 +57,7 @@ def browse():
     credentials = client.OAuth2Credentials.from_json(config_gdrive_cred.value)
     http_auth = credentials.authorize(httplib2.Http())
     drive_service = discovery.build('drive', 'v2', http_auth)
-    folders_list, files_list = retrieve_all_files(drive_service)
+    folders_list, files_list = retrieve_all_files(drive_service, "root")
     
     print(folders_list)
     print(files_list)
