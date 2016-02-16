@@ -31,10 +31,13 @@ def retrieve_all_files(service, folder_id):
             
             #result.extend(files['items'])
             for f in files['items']:
+                print("ENTRY: %s" % str(f))
                 if f.get('mimeType') == "application/vnd.google-apps.folder":
-                    result_folders.append([f.get('title'), copy.deepcopy(f)])
+                    if f.get('title') != None:
+                        result_folders.append([f.get('title'), copy.deepcopy(f)])
                 else:
-                    result_files.append([f.get('title'), copy.deepcopy(f)])
+                    if f.get('title') != None:
+                        result_files.append([f.get('title'), copy.deepcopy(f)])
             
             page_token = files.get('nextPageToken')
             if not page_token:
