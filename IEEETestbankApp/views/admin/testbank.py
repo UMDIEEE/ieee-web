@@ -68,4 +68,4 @@ def gdrive_oauth2callback():
                             description = "IEEE@UMD Testbank <-> Google Drive Credentials")
         db.session.add(new_cred)
         db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for('gdrive_auth'))
