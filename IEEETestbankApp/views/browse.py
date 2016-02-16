@@ -46,6 +46,7 @@ def retrieve_all_files(service, path, folder_id):
                     if f.get('mimeType') == "application/vnd.google-apps.folder":
                         if f.get('title') != None:
                             if (not got_path) and (f.get('title') == cur_path):
+                                print("[browse.py] Matched %s with folder ID %s!" % (cur_path, f.get('id')))
                                 folder_id = f.get('id')
                                 path = path[1:]
                                 break
@@ -71,8 +72,13 @@ def retrieve_all_files(service, path, folder_id):
             page_token = None
             old_path_len = len(path)
             
-            if len(path) != 0:
+            if len(path) == 0:
+                print("[browse.py] No paths left - we can finally get directory contents!")
+                got_path = True
+            else:
+                print("[browse.py] Still %i paths left!" % len(path))
                 cur_path = path[0]
+                print("[browse.py] Next path: %s" % cur_path)
         else:
             if len(path) == 0:
                 if got_path:
