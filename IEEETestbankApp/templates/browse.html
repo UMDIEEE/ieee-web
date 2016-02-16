@@ -15,15 +15,13 @@
               </thead>
               <tbody>
                 {% for folder in folders %}
-                <a href="{{ request.path }}/{{ folder[1].title }}">
                 <tr class="{{ loop.cycle('rodd', 'reven') }}">
                   <td>{{ folder[1].id }}</td>
-                  <td>{{ folder[1].title }}</td>
+                  <td><a href="{{ request.path }}/{{ folder[1].title }}">{{ folder[1].title }}</a></td>
                   <td>Folder</td>
                   <td>{{ folder[1].modifiedDate }}</td>
                   <td></td>
                 </tr>
-                </a>
                 {% endfor %}
                 
                 {% for file in files %}
