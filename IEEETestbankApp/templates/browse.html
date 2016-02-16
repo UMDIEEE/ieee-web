@@ -16,21 +16,21 @@
               <tbody>
                 {% for folder in folders %}
                 <tr class="{{ loop.cycle('rodd', 'reven') }}">
-                  <td>{{ folder.id }}</td>
-                  <td>{{ folder.title }}</td>
+                  <td>{{ folder[1].id }}</td>
+                  <td>{{ folder[1].title }}</td>
                   <td>Folder</td>
-                  <td>{{ folder.modifiedDate }}</td>
+                  <td>{{ folder[1].modifiedDate }}</td>
                   <td></td>
                 </tr>
                 {% endfor %}
                 
                 {% for file in files %}
                 <tr class="{{ loop.cycle('rodd', 'reven') }}">
-                  <td>{{ file.id }}</td>
-                  <td>{{ file.title }}</td>
+                  <td>{{ file[1].id }}</td>
+                  <td>{{ file[1].title }}</td>
                   <td>File</td>
-                  <td>{{ file.modifiedDate }}</td>
-                  <td>{{ file.fileSize }}</td>
+                  <td>{{ file[1].modifiedDate }}</td>
+                  <td>{{ file[1].fileSize }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
