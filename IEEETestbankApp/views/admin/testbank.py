@@ -55,7 +55,7 @@ def gdrive_oauth2callback():
         scope='https://www.googleapis.com/auth/drive',
         redirect_uri=url_for('gdrive_oauth2callback', _external=True)
     )
-    flow.params['include_granted_scopes'] = True
+    flow.params['include_granted_scopes'] = 'true'
     flow.params['access_type'] = 'offline'
     if 'code' not in request.args:
         auth_uri = flow.step1_get_authorize_url()
