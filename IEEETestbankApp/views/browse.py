@@ -7,6 +7,7 @@ from IEEETestbankApp.models.auth import Config
 from apiclient import discovery, errors
 from oauth2client import client
 import httplib2
+import copy
 
 # Browse page
 
