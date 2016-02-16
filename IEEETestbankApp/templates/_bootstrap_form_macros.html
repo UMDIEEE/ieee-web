@@ -23,6 +23,16 @@
     </div>
 {%- endmacro %}
 
+{% macro render_field_error_class(field) -%}{% if field.errors %} has-error{% endif %}{%- endmacro %}
+
+{% macro render_field_error(field) -%}
+    {% if field.errors %}
+        {% for e in field.errors %}
+            <p class="help-block">{{ e }}</p>
+        {% endfor %}
+    {% endif %}
+{%- endmacro %}
+
 {# Renders checkbox fields since they are represented differently in bootstrap
     Params:
         field - WTForm field (there are no check, but you should put here only BooleanField.
@@ -33,9 +43,10 @@
         {{ macros.render_checkbox_field(form.remember_me) }}
  #}
 {% macro render_checkbox_field(field) -%}
-    <div class="checkbox">
+    <div class="checkbox{{ render_field_error_class(field) }}">
         {{ field(type='checkbox', **kwargs) }}
         {{ field.label }}
+        {{ render_field_error(field) }}
     </div>
 {%- endmacro %}
 
@@ -50,10 +61,11 @@
  #}
 {% macro render_radio_field(field) -%}
     {% for value, label, _ in field.iter_choices() %}
-        <div class="radio">
+        <div class="radio{{ render_field_error_class(field) }}">
             <label>
                 <input type="radio" name="{{ field.id }}" id="{{ field.id }}" value="{{ value }}">{{ label }}
             </label>
+            {{ render_field_error(field) }}
         </div>
     {% endfor %}
 {%- endmacro %}

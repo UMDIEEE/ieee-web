@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, flash
 from flask.ext.security import login_required, current_user, roles_accepted
 from flask_menu import register_menu
 
@@ -8,6 +8,7 @@ from IEEETestbankApp import app
 from IEEETestbankApp.views.admin.admin import check_admin
 from IEEETestbankApp.models.auth import Config
 from IEEETestbankApp.models.db import db
+from IEEETestbankApp.forms import TestbankSettingsForm
 
 from apiclient import discovery
 from oauth2client import client
@@ -30,12 +31,31 @@ def admin_testbank_approve():
 def admin_testbank_edit():
     return render_template('admin/demo.html', user = current_user)
 
-@app.route('/admin/testbank/settings')
+@app.route('/admin/testbank/settings', methods=['GET', 'POST'])
 @register_menu(app, 'main.admin.testbank.settings', 'Testbank Settings', order = 3, visible_when = check_admin)
 @roles_accepted('Administrator')
 def admin_testbank_settings():
+    form = TestbankSettingsForm(request.form)
+    
     config_gdrive_cred = Config.query.filter_by(name='gdrive_oauth2_credentials').first()
-    return render_template('admin/testbank_settings.html', user = current_user, cred = config_gdrive_cred)
+    config_gdrive_folder = Config.query.filter_by(name='gdrive_folder').first()
+    
+    if request.method == 'POST' and form.validate():
+        flash("Setttings updated!")
+        if config_gdrive_folder != None:
+            config_gdrive_folder.value = form.gdrive_folder.data
+            db.session.commit()
+        else:
+            config_gdrive_folder = Config(name = 'gdrive_folder',
+                            value = form.gdrive_folder.data,
+                            description = "Google Drive Folder for Tests")
+            db.session.add(config_gdrive_folder)
+            db.session.commit()
+    
+    if config_gdrive_folder != None:
+        form.gdrive_folder.data = config_gdrive_folder.value
+    
+    return render_template('admin/testbank_settings.html', user = current_user, cred = config_gdrive_cred, testbank_settings_form = form)
 
 @app.route('/admin/testbank/gdrive_auth')
 def gdrive_auth():

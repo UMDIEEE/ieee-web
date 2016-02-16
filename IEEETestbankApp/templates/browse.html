@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %}Search{% endblock %}
+{% block content %}
+        <h1>Browse the Testbank</h1>
+        <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Modified Date</th>
+                  <th>File Size</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for folder in folders %}
+                <tr class="{{ loop.cycle('rodd', 'reven') }}">
+                  <td>{{ folder.id }}</td>
+                  <td>{{ folder.title }}</td>
+                  <td>Folder</td>
+                  <td>{{ folder.modifiedDate }}</td>
+                  <td></td>
+                </tr>
+                {% endfor %}
+                
+                {% for file in files %}
+                <tr class="{{ loop.cycle('rodd', 'reven') }}">
+                  <td>{{ file.id }}</td>
+                  <td>{{ file.title }}</td>
+                  <td>File</td>
+                  <td>{{ file.modifiedDate }}</td>
+                  <td>{{ file.fileSize }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+{% endblock %}

@@ -160,7 +160,7 @@ def deleteUser():
         users_opts.append([user, "%s %s (%s)" % (user.first_name, user.last_name, user.username)])
     
     while 1:
-        user_select, user_select_str = select("User", user_opts)
+        user_select, user_select_str = select("User", users_opts)
         
         print("Confirm deleting user:")
         print("======================")

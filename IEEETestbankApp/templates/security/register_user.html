@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}Register{% endblock %}
-{% from "security/_macros.html" import render_field_with_errors, render_field %}
+{% from "_macros.html" import render_field_with_errors, render_field %}
 {% include "security/_messages.html" %}
 {% block content %}
 <form class="form-signin" ction="{{ url_for('umdregister') }}" method="POST" name="register_user_form">

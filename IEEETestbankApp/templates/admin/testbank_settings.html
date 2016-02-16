@@ -1,12 +1,25 @@
 {% extends "admin/dashboard.html" %}
+{% from "_macros.html" import render_field_with_errors, render_field %}
 {% block dashtitle %}Testbank Settings{% endblock %}
 {% block settingspane %}
           <h2 class="sub-header">Google Drive</h2>
-          {% if config_gdrive_cred != None %}
-          <b>Google Drive has been linked to the IEEE Testbank.</b>
+          {% if config_gdrive_cred is defined %}
+          <b>Google Drive has been <span style="color: green;">linked</span> to the IEEE Testbank.</b><br />
+          <a href="{{ url_for('gdrive_auth') }}" class="btn btn-danger">Unlink Google Drive from IEEE@UMD Testbank</a>
           {% else %}
           <b>Google Drive has <span style="color: red;">NOT</span> been linked to the IEEE@UMD Testbank.</b><br />
           <a href="{{ url_for('gdrive_auth') }}" class="btn btn-success">Link Google Drive to IEEE@UMD Testbank</a>
           {% endif %}
           
+          <form method="POST" action="">
+          {{ testbank_settings_form.hidden_tag() }}
+          
+          {% if testbank_settings_form.csrf_token.errors %}
+            <div class="warning">You have submitted an invalid CSRF token</div>
+          {% endif %}
+          
+          {{ render_field_with_errors(testbank_settings_form.gdrive_folder) }}
+          {{ render_field_with_errors(testbank_settings_form.confirm_change) }}
+          {{ render_field(testbank_settings_form.submit) }}
+          </form>
 {% endblock %}
