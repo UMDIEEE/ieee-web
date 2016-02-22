@@ -59,7 +59,8 @@ def admin_testbank_settings():
     
     print("[testbank.py] config_gdrive_cred = %s" % str(config_gdrive_cred))
     
-    return render_template('admin/testbank_settings.html', user = current_user, cred = config_gdrive_cred, testbank_settings_form = form)
+    return render_template('admin/testbank_settings.html', user = current_user,
+        config_gdrive_cred = config_gdrive_cred, testbank_settings_form = form)
 
 @app.route('/admin/testbank/gdrive_auth')
 def gdrive_auth():
