@@ -119,7 +119,11 @@ def gdrive_deauth():
         return redirect(url_for('admin_testbank_settings'))
     
     credentials = client.OAuth2Credentials.from_json(config_gdrive_cred.value)
-    credentials.revoke(httplib2.Http())
+    
+    try:
+        credentials.revoke(httplib2.Http())
+    except:
+        flash("Could not revoke credentails! Assuming credentials are already revoked. Reason: " + traceback.format_exc())
     
     db.session.delete(config_gdrive_cred)
     db.session.commit()
