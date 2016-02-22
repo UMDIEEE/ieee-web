@@ -13,6 +13,8 @@ from IEEETestbankApp.forms import TestbankSettingsForm
 from apiclient import discovery
 from oauth2client import client
 
+import httplib2
+
 @app.route('/admin/testbank')
 @register_menu(app, 'main.admin.testbank', 'Testbank', order = 1, visible_when = check_admin)
 @roles_accepted('Administrator')
@@ -69,6 +71,21 @@ def gdrive_auth():
         return redirect(url_for('gdrive_oauth2callback'))
     else:
         return redirect(url_for('admin_testbank_settings'))
+
+@app.route('/admin/testbank/gdrive_deauth')
+def gdrive_deauth():
+    config_gdrive_cred = Config.query.filter_by(name='gdrive_oauth2_credentials').first()
+    if not config_gdrive_cred:
+        flash("No Google Drive account is linked at the moment.")
+        return redirect(url_for('admin_testbank_settings'))
+    
+    credentials = client.OAuth2Credentials.from_json(config_gdrive_cred.value)
+    credentials.revoke(httplib2.Http())
+    
+    db.session.delete(config_gdrive_cred)
+    db.session.commit()
+    
+    return redirect(url_for('admin_testbank_settings'))
 
 @app.route('/admin/testbank/gdrive_oauth2callback')
 def gdrive_oauth2callback():

@@ -8,7 +8,7 @@
           <a href="{{ url_for('gdrive_auth') }}" class="btn btn-danger">Unlink Google Drive from IEEE@UMD Testbank</a>
           {% else %}
           <b>Google Drive has <span style="color: red;">NOT</span> been linked to the IEEE@UMD Testbank.</b><br />
-          <a href="{{ url_for('gdrive_auth') }}" class="btn btn-success">Link Google Drive to IEEE@UMD Testbank</a>
+          <a href="{{ url_for('gdrive_deauth') }}" class="btn btn-success">Link Google Drive to IEEE@UMD Testbank</a>
           {% endif %}
           
           <form method="POST" action="">
