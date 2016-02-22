@@ -14,6 +14,7 @@ from apiclient import discovery
 from oauth2client import client
 
 import httplib2
+import traceback
 
 @app.route('/admin/testbank')
 @register_menu(app, 'main.admin.testbank', 'Testbank', order = 1, visible_when = check_admin)
