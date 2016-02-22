@@ -75,7 +75,7 @@ def admin_testbank_settings():
             
         http_auth = credentials.authorize(httplib2.Http())
         people_service = discovery.build('people', 'v1', http_auth)
-        linked_acct_info = people_service.people().get(userId='me').execute()
+        linked_acct_info = people_service.people().get('me').execute()
         linked_acct_info_name = linked_acct_info.get('names')[0].get("displayName")
         linked_acct_info_email = linked_acct_info.get('emailAddresses')[0].get("value")
         config_gdrive_user = [ linked_acct_info_name, linked_acct_info_email ]
