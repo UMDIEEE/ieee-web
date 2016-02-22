@@ -85,6 +85,7 @@ def gdrive_deauth():
     db.session.delete(config_gdrive_cred)
     db.session.commit()
     
+    flash("Google Drive account unlinked successfully.")
     return redirect(url_for('admin_testbank_settings'))
 
 @app.route('/admin/testbank/gdrive_oauth2callback')
