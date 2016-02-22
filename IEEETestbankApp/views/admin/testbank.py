@@ -91,7 +91,17 @@ def gdrive_auth():
     config_gdrive_cred = Config.query.filter_by(name='gdrive_oauth2_credentials').first()
     if not config_gdrive_cred:
         return redirect(url_for('gdrive_oauth2callback'))
-    credentials = client.OAuth2Credentials.from_json(config_gdrive_cred.value)
+    
+    try:
+        credentials = client.OAuth2Credentials.from_json(config_gdrive_cred.value)
+    except ValueError:
+        flash("Could not decode credentials, erasing.")
+        db.session.delete(config_gdrive_cred)
+        db.session.commit()
+        config_gdrive_cred = None
+        
+        return redirect(url_for('admin_testbank_settings'))
+    
     if credentials.access_token_expired:
         return redirect(url_for('gdrive_oauth2callback'))
     else:
