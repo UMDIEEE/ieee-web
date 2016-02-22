@@ -78,7 +78,7 @@ def admin_testbank_settings():
             people_service = discovery.build('people', 'v1', http_auth)
             linked_acct_info = people_service.people().get(resourceName='people/me').execute()
             linked_acct_info_name = linked_acct_info.get('names')[0].get("displayName")
-            linked_acct_info_email = linked_acct_info.get('emails')[0].get("value")
+            linked_acct_info_email = linked_acct_info.get('emailAddresses')[0].get("value")
             config_gdrive_user = [ linked_acct_info_name, linked_acct_info_email ]
         except:
             flash(traceback.format_exc())
