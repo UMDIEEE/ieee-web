@@ -60,7 +60,19 @@ def admin_testbank_settings():
     print("[testbank.py] config_gdrive_cred = %s" % str(config_gdrive_cred))
     
     if config_gdrive_cred:
-        credentials = client.OAuth2Credentials.from_json(config_gdrive_cred.value)
+        try:
+            credentials = client.OAuth2Credentials.from_json(config_gdrive_cred.value)
+        except ValueError:
+            flash("Could not decode credentials, erasing.")
+            config_gdrive_user = None
+            db.session.delete(config_gdrive_cred)
+            db.session.commit()
+            config_gdrive_cred = None
+            
+            return render_template('admin/testbank_settings.html', user = current_user,
+                config_gdrive_cred = config_gdrive_cred, config_gdrive_user = config_gdrive_user,
+                testbank_settings_form = form)
+            
         http_auth = credentials.authorize(httplib2.Http())
         people_service = discovery.build('people', 'v1', http_auth)
         linked_acct_info = people_service.get('me')
