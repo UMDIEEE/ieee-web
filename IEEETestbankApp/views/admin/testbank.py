@@ -72,13 +72,16 @@ def admin_testbank_settings():
             return render_template('admin/testbank_settings.html', user = current_user,
                 config_gdrive_cred = config_gdrive_cred, config_gdrive_user = config_gdrive_user,
                 testbank_settings_form = form)
-            
-        http_auth = credentials.authorize(httplib2.Http())
-        people_service = discovery.build('plus', 'v1', http_auth)
-        linked_acct_info = people_service.people().get(userId='me').execute()
-        linked_acct_info_name = linked_acct_info.get('names')[0].get("displayName")
-        linked_acct_info_email = linked_acct_info.get('emailAddresses')[0].get("value")
-        config_gdrive_user = [ linked_acct_info_name, linked_acct_info_email ]
+        try:
+            http_auth = credentials.authorize(httplib2.Http())
+            people_service = discovery.build('people', 'v1', http_auth)
+            linked_acct_info = people_service.people().get(userId='me').execute()
+            linked_acct_info_name = linked_acct_info.get('names')[0].get("displayName")
+            linked_acct_info_email = linked_acct_info.get('emailAddresses')[0].get("value")
+            config_gdrive_user = [ linked_acct_info_name, linked_acct_info_email ]
+        except:
+            flash(traceback.format_exc())
+            config_gdrive_user = None
     else:
         config_gdrive_user = None
     
