@@ -3,7 +3,7 @@
 {% block dashtitle %}Testbank Settings{% endblock %}
 {% block settingspane %}
           <h2 class="sub-header">Google Drive</h2>
-          {% if config_gdrive_cred is defined %}
+          {% if config_gdrive_cred is not none %}
           <b>Google Drive has been <span style="color: green;">linked</span> to the IEEE Testbank.</b><br />
           <a href="{{ url_for('gdrive_auth') }}" class="btn btn-danger">Unlink Google Drive from IEEE@UMD Testbank</a>
           {% else %}
