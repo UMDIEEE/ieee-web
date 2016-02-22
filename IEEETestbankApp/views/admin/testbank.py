@@ -55,6 +55,8 @@ def admin_testbank_settings():
     if config_gdrive_folder != None:
         form.gdrive_folder.data = config_gdrive_folder.value
     
+    print("[testbank.py] config_gdrive_cred = %s" % str(config_gdrive_cred))
+    
     return render_template('admin/testbank_settings.html', user = current_user, cred = config_gdrive_cred, testbank_settings_form = form)
 
 @app.route('/admin/testbank/gdrive_auth')
