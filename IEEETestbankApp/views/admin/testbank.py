@@ -59,8 +59,20 @@ def admin_testbank_settings():
     
     print("[testbank.py] config_gdrive_cred = %s" % str(config_gdrive_cred))
     
+    if config_gdrive_cred:
+        credentials = client.OAuth2Credentials.from_json(config_gdrive_cred.value)
+        http_auth = credentials.authorize(httplib2.Http())
+        people_service = discovery.build('people', 'v1', http_auth)
+        linked_acct_info = people_service.get('me')
+        linked_acct_info_name = linked_acct_info.get('names')[0].get("displayName")
+        linked_acct_info_email = linked_acct_info.get('emailAddresses')[0].get("value")
+        config_gdrive_user = [ linked_acct_info_name, linked_acct_info_email ]
+    else:
+        config_gdrive_user = None
+    
     return render_template('admin/testbank_settings.html', user = current_user,
-        config_gdrive_cred = config_gdrive_cred, testbank_settings_form = form)
+        config_gdrive_cred = config_gdrive_cred, config_gdrive_user = config_gdrive_user,
+        testbank_settings_form = form)
 
 @app.route('/admin/testbank/gdrive_auth')
 def gdrive_auth():
@@ -93,7 +105,7 @@ def gdrive_deauth():
 def gdrive_oauth2callback():
     flow = client.flow_from_clientsecrets(
         os.path.join(app.instance_path, 'client_secrets.json'),
-        scope='https://www.googleapis.com/auth/drive',
+        scope='https://www.googleapis.com/auth/drive email profile',
         redirect_uri=url_for('gdrive_oauth2callback', _external=True)
     )
     flow.params['include_granted_scopes'] = 'true'

@@ -8,6 +8,8 @@
           <a href="{{ url_for('gdrive_auth') }}" class="btn btn-success">Link Google Drive to IEEE@UMD Testbank</a>
           {% else %}
           <b>Google Drive has been <span style="color: green;">linked</span> to the IEEE Testbank.</b><br />
+          <b>Currently connected account:</b> {% if config_gdrive_user is not none %}{{ config_gdrive_user[0] }} ({{ config_gdrive_user[1] }})
+          {% else %}<b>WARNING: Could not find account details!</b>{% endif %}<br />
           <a href="{{ url_for('gdrive_deauth') }}" class="btn btn-danger">Unlink Google Drive from IEEE@UMD Testbank</a>
           {% endif %}
           
