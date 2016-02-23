@@ -100,8 +100,11 @@ def retrieve_all_files(service, path, folder_id):
 
 # Views
 @app.route('/browse', defaults={'path': ''})
-@app.route('/browse/<path:path>')
 @register_menu(app, 'main.browse', 'Browse', order = 1)
+def browse_main(path):
+    return browse(path)
+
+@app.route('/browse/<path:path>')
 def browse(path):
     config_gdrive_cred = Config.query.filter_by(name='gdrive_oauth2_credentials').first()
     config_gdrive_folder = Config.query.filter_by(name='gdrive_folder').first()
