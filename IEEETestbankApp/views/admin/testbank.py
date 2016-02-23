@@ -64,8 +64,6 @@ def admin_testbank_settings():
     if config_gdrive_cred:
         try:
             credentials = fetch_latest_cred(config_gdrive_cred.value)
-            if credentials.access_token_expired():
-                credentials.refresh()
         except ValueError:
             flash("Could not decode credentials, erasing.")
             config_gdrive_user = None
