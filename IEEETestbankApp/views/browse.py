@@ -3,6 +3,7 @@ from flask.ext.security import login_required, current_user
 from flask_menu import register_menu
 from IEEETestbankApp import app
 from IEEETestbankApp.models.auth import Config
+from IEEETestbankApp.views.credhelper import fetch_latest_cred, store_cred
 
 from apiclient import discovery, errors
 from oauth2client import client
@@ -113,7 +114,7 @@ def browse(path):
         flash("Someone forgot to set the right folder, at the right time... Oops!")
         return redirect(url_for('home'))
     
-    credentials = client.OAuth2Credentials.from_json(config_gdrive_cred.value)
+    credentials = fetch_latest_cred(config_gdrive_cred.value)
     http_auth = credentials.authorize(httplib2.Http())
     drive_service = discovery.build('drive', 'v2', http_auth)
     folders_list, files_list = retrieve_all_files(drive_service, os.path.join(config_gdrive_folder.value, path), "root")

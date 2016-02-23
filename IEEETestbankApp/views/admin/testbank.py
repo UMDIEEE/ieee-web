@@ -9,6 +9,7 @@ from IEEETestbankApp.views.admin.admin import check_admin
 from IEEETestbankApp.models.auth import Config
 from IEEETestbankApp.models.db import db
 from IEEETestbankApp.forms import TestbankSettingsForm
+from IEEETestbankApp.views.credhelper import fetch_latest_cred, store_cred
 
 from apiclient import discovery
 from oauth2client import client
@@ -62,7 +63,9 @@ def admin_testbank_settings():
     
     if config_gdrive_cred:
         try:
-            credentials = client.OAuth2Credentials.from_json(config_gdrive_cred.value)
+            credentials = fetch_latest_cred(config_gdrive_cred.value)
+            if credentials.access_token_expired():
+                credentials.refresh()
         except ValueError:
             flash("Could not decode credentials, erasing.")
             config_gdrive_user = None
@@ -97,7 +100,7 @@ def gdrive_auth():
         return redirect(url_for('gdrive_oauth2callback'))
     
     try:
-        credentials = client.OAuth2Credentials.from_json(config_gdrive_cred.value)
+        credentials = fetch_latest_cred(config_gdrive_cred.value)
     except ValueError:
         flash("Could not decode credentials, erasing.")
         db.session.delete(config_gdrive_cred)
@@ -118,7 +121,7 @@ def gdrive_deauth():
         flash("No Google Drive account is linked at the moment.")
         return redirect(url_for('admin_testbank_settings'))
     
-    credentials = client.OAuth2Credentials.from_json(config_gdrive_cred.value)
+    credentials = fetch_latest_cred(config_gdrive_cred.value)
     
     try:
         credentials.revoke(httplib2.Http())
@@ -146,13 +149,5 @@ def gdrive_oauth2callback():
     else:
         auth_code = request.args.get('code')
         credentials = flow.step2_exchange(auth_code)
-        config_gdrive_cred = Config.query.filter_by(name='gdrive_oauth2_credentials').first()
-        if config_gdrive_cred != None:
-            config_gdrive_cred.value = credentials.to_json()
-        else:
-            new_cred = Config(name = 'gdrive_oauth2_credentials',
-                                value = credentials.to_json(),
-                                description = "IEEE@UMD Testbank <-> Google Drive Credentials")
-            db.session.add(new_cred)
-        db.session.commit()
+        store_cred(credentials)
         return redirect(url_for('gdrive_auth'))
