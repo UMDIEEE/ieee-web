@@ -126,5 +126,5 @@ def browse(path):
     print(folders_list)
     print(files_list)
     
-    return render_template('browse.html', user = current_user, files = files_list, folders = folders_list, basename = os.path.basename)
+    return render_template('browse.html', user = current_user, files = files_list, folders = folders_list, dirname = os.path.dirname)
 
