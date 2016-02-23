@@ -4,7 +4,7 @@ from IEEETestbankApp.models.db import db
 
 def fetch_latest_cred(val):
     credentials = client.OAuth2Credentials.from_json(val)
-    if credentials.access_token_expired():
+    if credentials.access_token_expired:
         print('[credhelper.py] Detected credential expiration, refreshing tokens.')
         credentials.refresh()
         store_cred(credentials)
