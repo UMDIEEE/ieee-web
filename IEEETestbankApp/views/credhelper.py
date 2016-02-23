@@ -1,12 +1,13 @@
 from oauth2client import client
 from IEEETestbankApp.models.auth import Config
 from IEEETestbankApp.models.db import db
+import httplib2
 
 def fetch_latest_cred(val):
     credentials = client.OAuth2Credentials.from_json(val)
     if credentials.access_token_expired:
         print('[credhelper.py] Detected credential expiration, refreshing tokens.')
-        credentials.refresh()
+        credentials.refresh(httplib2.Http())
         store_cred(credentials)
     return credentials
 
