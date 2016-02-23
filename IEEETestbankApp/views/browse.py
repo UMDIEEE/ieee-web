@@ -99,10 +99,10 @@ def retrieve_all_files(service, path, folder_id):
     return result_folders, result_files
 
 # Views
-@app.route('/browse', defaults={'path': ''})
+@app.route('/browse')
 @register_menu(app, 'main.browse', 'Browse', order = 1)
-def browse_main(path):
-    return browse(path)
+def browse_main():
+    return browse("")
 
 @app.route('/browse/', defaults={'path': ''})
 @app.route('/browse/<path:path>')
