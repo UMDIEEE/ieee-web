@@ -3,11 +3,11 @@
 {% block content %}
         <h1>Browse the Testbank</h1>
         <nav class="breadcrumb">
-          {% for sub_path in path %}
+          {% for sub_path in split_path %}
           {% if loop.last %}
           <span class="breadcrumb-item active">{{ sub_path }}</span>
           {% else %}
-          <a class="breadcrumb-item" href="{{ dirname(request.path) }}">{{ sub_path }}</a>
+          <a class="breadcrumb-item" href="{{ sub_path }}">{{ sub_path }}</a>
           {% endif %}
           {% endfor %}
         </nav>
