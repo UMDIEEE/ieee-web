@@ -128,6 +128,7 @@ def browse(path):
     print(files_list)
     
     template_kwargs = get_default_template_kwargs()
+    print(path.split('/'))
     
     return render_template('browse.html', split_path = path.split('/'),
         path = path, files = files_list, folders = folders_list,
