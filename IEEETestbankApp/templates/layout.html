@@ -105,7 +105,7 @@
       <div class="container">
         {% block footer %}
         {% endblock %}
-        <p class="text-muted">{% if sha is not none %}No SHA found!{% else %}{{ sha }}{% endif %}</p>
+        <p class="text-muted">{{ sha if sha != None else 'No SHA found!' }}</p>
       </div>
     </footer>
     
