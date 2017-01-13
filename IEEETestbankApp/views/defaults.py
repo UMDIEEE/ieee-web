@@ -1,6 +1,5 @@
 from flask.ext.security import current_user
-from IEEETestbankApp.views.github import get_latest_github_commit,
-    get_latest_github_msg
+from IEEETestbankApp.views.github import get_latest_github_commit, get_latest_github_msg
 
 def get_default_template_kwargs():
     return {
