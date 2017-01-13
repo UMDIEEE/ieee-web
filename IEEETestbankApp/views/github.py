@@ -37,6 +37,24 @@ def get_latest_github_commit():
         return config_github_commit.value
     return None
 
+def update_latest_github_msg(commit_msg):
+    config_github_msg = Config.query.filter_by(name='github_msg').first()
+    if config_github_msg != None:
+        config_github_msg.value = commit_msg
+        db.session.commit()
+    else:
+        config_github_msg = Config(name = 'github_msg',
+                        value = commit_msg,
+                        description = "Latest GitHub Commit Message")
+        db.session.add(config_github_msg)
+        db.session.commit()
+
+def get_latest_github_msg():
+    config_github_msg = Config.query.filter_by(name='github_msg').first()
+    if config_github_msg != None:
+        return config_github_msg.value
+    return None
+
 # Flask route that will process the payload
 @app.route("/api/github_payload", methods=['POST'])
 def ghpayload():
@@ -49,6 +67,7 @@ def ghpayload():
             payload = request.get_json()
             if payload['commits'][0]['distinct'] == True:
                 update_latest_github_commit(payload['commits'][0]['id'])
+                update_latest_github_msg("[%s] %s" % (payload['commits'][0]['author']['username'], payload['commits'][0]['message']))
                 proc = subprocess.Popen(
                     ['git', 'pull', 'origin', 'master'],
                     cwd=os.path.dirname(os.path.realpath(__file__)),
