@@ -9,6 +9,8 @@
           {% else %}
           <li class="breadcrumb-item"><a href="{{ sub_path }}">{{ sub_path }}</a></li>
           {% endif %}
+          {% else %}
+          <li class="breadcrumb-item"><a href="{{ sub_path }}">Home</a></li>
           {% endfor %}
         </ol>
         <div class="table-responsive">
