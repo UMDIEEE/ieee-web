@@ -45,7 +45,7 @@
                 {% for file in files %}
                 <tr class="{{ loop.cycle('rodd', 'reven') }}">
                   <td>{{ file[1].id }}</td>
-                  <td>{{ file[1].title }}</td>
+                  <td><a href="https://drive.google.com/file/d/{{ file[1].id }}/view">{{ file[1].title }}</a></td>
                   <td>File ({{ file[1].mimeType }})</td>
                   <td>{{ file[1].modifiedDate }}</td>
                   <td>{{ file[1].fileSize }}</td>
