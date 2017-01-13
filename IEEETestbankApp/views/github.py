@@ -53,7 +53,7 @@ def ghpayload():
                     ['git', 'pull', 'origin', 'master'],
                     cwd=os.path.dirname(os.path.realpath(__file__)),
                     stdout=subprocess.PIPE)
-                cmd_output, err = p.communicate()
+                cmd_output, err = proc.communicate()
                 pythonanywhere_touch(app.config['WSGI_CONFIG_FILE'])
                 return jsonify({'msg': str(cmd_output)})
     else:
