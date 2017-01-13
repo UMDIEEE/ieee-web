@@ -3,19 +3,14 @@
 {% block content %}
         <h1>Browse the Testbank</h1>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item"><a href="#">Library</a></li>
-          <li class="breadcrumb-item active">Data</li>
-        </ol>
-        <nav class="breadcrumb">
           {% for sub_path in split_path %}
           {% if loop.last %}
-          <span class="breadcrumb-item active">{{ sub_path }}</span>
+          <li class="breadcrumb-item active">{{ sub_path }}</li>
           {% else %}
-          <a class="breadcrumb-item" href="{{ sub_path }}">{{ sub_path }}</a>
+          <li class="breadcrumb-item"><a href="{{ sub_path }}">{{ sub_path }}</a></li>
           {% endif %}
           {% endfor %}
-        </nav>
+        </ol>
         <div class="table-responsive">
             <table class="table table-striped">
               <thead>
