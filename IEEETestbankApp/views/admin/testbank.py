@@ -108,7 +108,7 @@ def gdrive_auth():
         return redirect(url_for('admin_testbank_settings'))
     
     if credentials.access_token_expired:
-        return redirect(url_for('gdrive_oauth2callback'))
+        return redirect(url_for('gdrive_deauth'))
     else:
         return redirect(url_for('admin_testbank_settings'))
 
