@@ -4,6 +4,7 @@ from flask_menu import register_menu
 
 from IEEETestbankApp import app
 from IEEETestbankApp.views.admin.admin import check_admin
+from IEEETestbankApp.views.defaults import get_default_template_kwargs
 from IEEETestbankApp.models.auth import User, Role
 
 def translate_roles(roles):

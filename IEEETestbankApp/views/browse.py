@@ -4,6 +4,7 @@ from flask_menu import register_menu
 from IEEETestbankApp import app
 from IEEETestbankApp.models.auth import Config
 from IEEETestbankApp.views.credhelper import fetch_latest_cred, store_cred
+from IEEETestbankApp.views.defaults import get_default_template_kwargs
 
 from apiclient import discovery, errors
 from oauth2client import client

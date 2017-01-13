@@ -4,6 +4,7 @@ from flask_menu import register_menu
 
 from IEEETestbankApp import app
 from IEEETestbankApp.views.admin.admin import check_admin
+from IEEETestbankApp.views.defaults import get_default_template_kwargs
 
 @app.route('/admin/dashboard')
 @register_menu(app, 'main.admin.dashboard', 'Dashboard', order = 0, visible_when = check_admin)
