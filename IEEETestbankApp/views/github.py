@@ -1,6 +1,5 @@
 from IEEETestbankApp import app
-from flask import Flask, render_template, request, redirect, url_for,
-    jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import hmac
 import hashlib
 import subprocess
