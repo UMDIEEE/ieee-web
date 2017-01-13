@@ -9,5 +9,6 @@ from IEEETestbankApp import app
 @app.route('/submit')
 @register_menu(app, 'main.submit', 'Submit', order = 2)
 def submit():
-    return render_template('search.html', user = current_user)
+    template_kwargs = get_default_template_kwargs()
+    return render_template('search.html', **template_kwargs)
 

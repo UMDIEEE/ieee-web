@@ -101,6 +101,14 @@
     </div><!-- /.container -->
     {% endblock %}
     
+    <footer class="footer">
+      <div class="container">
+        {% block footer %}
+        {% endblock %}
+        <p class="text-muted">{% if sha is not none %}No SHA found!{% else %}{{ sha }}{% endif %}</p>
+      </div>
+    </footer>
+    
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

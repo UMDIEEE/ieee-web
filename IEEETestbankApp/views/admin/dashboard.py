@@ -9,4 +9,5 @@ from IEEETestbankApp.views.admin.admin import check_admin
 @register_menu(app, 'main.admin.dashboard', 'Dashboard', order = 0, visible_when = check_admin)
 @roles_accepted('Administrator')
 def admin_dashboard():
-    return render_template('admin/demo.html', user = current_user)
+    template_kwargs = get_default_template_kwargs()
+    return render_template('admin/demo.html', **template_kwargs)

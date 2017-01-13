@@ -14,10 +14,15 @@ def translate_roles(roles):
 @register_menu(app, 'main.admin.users', 'Users', order = 2, visible_when = check_admin)
 @roles_accepted('Administrator')
 def admin_users():
-    return render_template('admin/demo.html', user = current_user)
+    template_kwargs = get_default_template_kwargs()
+    return render_template('admin/demo.html', **template_kwargs)
 
 @app.route('/admin/users/list')
 @register_menu(app, 'main.admin.users.list', 'User List', order = 0, visible_when = check_admin)
 @roles_accepted('Administrator')
 def admin_users_list():
-    return render_template('admin/users_list.html', user = current_user, user_list = User.query.all(), translate_roles = translate_roles)
+    template_kwargs = get_default_template_kwargs()
+    return render_template('admin/users_list.html',
+        user_list = User.query.all(),
+        translate_roles = translate_roles,
+        **template_kwargs)
