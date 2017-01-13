@@ -140,5 +140,5 @@ def browse(path):
     bread_path = path
     return render_template('browse.html', split_path = path.split('/'),
         path = path, files = files_list, folders = folders_list,
-        dirname = os.path.dirname, **template_kwargs)
+        dirname = os.path.dirname, breadcrumb_urls=breadcrumb_urls, **template_kwargs)
 
