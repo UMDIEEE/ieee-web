@@ -105,7 +105,7 @@
       <div class="container">
         {% block footer %}
         {% endblock %}
-        <p class="text-muted">{{ sha if sha != None else 'No SHA found!' }}</p>
+        <p class="text-muted"><a href="https://github.com/UMDIEEE/ieee-web/commit/{{ sha if sha != None else '#' }}">{{ sha if sha != None else 'No SHA found!' }}</a></p>
       </div>
     </footer>
     
