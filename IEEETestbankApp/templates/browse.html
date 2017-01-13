@@ -14,7 +14,7 @@
                 </tr>
               </thead>
               <tbody>
-                {% if path == "" %}
+                {% if path != "" %}
                 <tr class="rodd">
                   <td></td>
                   <td><a href="{{ dirname(request.path) }}">Up One Level</a></td>
