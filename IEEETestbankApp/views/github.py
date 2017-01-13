@@ -29,6 +29,12 @@ def update_latest_github_commit(commit_hash):
         db.session.add(config_github_commit)
         db.session.commit()
 
+def get_latest_github_commit():
+    config_github_commit = Config.query.filter_by(name='github_commit').first()
+    if config_github_commit != None:
+        return config_github_commit.value
+    return None
+
 # Flask route that will process the payload
 @app.route("/api/github_payload", methods=['POST'])
 def ghpayload():
@@ -40,7 +46,7 @@ def ghpayload():
         if request.headers.get('X-GitHub-Event') == "push":
             payload = request.get_json()
             if payload['commits'][0]['distinct'] == True:
-                update_latest_github_commit(payload['commits'][0]['sha'])
+                update_latest_github_commit(payload['commits'][0]['id'])
                 proc = subprocess.Popen(
                     ['git', 'pull', 'origin', 'master'],
                     cwd=os.path.dirname(os.path.realpath(__file__)),
