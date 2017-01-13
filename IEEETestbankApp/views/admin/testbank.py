@@ -64,7 +64,7 @@ def admin_testbank_settings():
     if config_gdrive_cred:
         try:
             credentials = fetch_latest_cred(config_gdrive_cred.value)
-        except ValueError:
+        except (ValueError, client.HttpAccessTokenRefreshError):
             flash("Could not decode credentials, erasing.")
             config_gdrive_user = None
             db.session.delete(config_gdrive_cred)
