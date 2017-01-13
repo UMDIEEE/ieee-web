@@ -2,6 +2,15 @@
 {% block title %}Search{% endblock %}
 {% block content %}
         <h1>Browse the Testbank</h1>
+        <nav class="breadcrumb">
+          {% for sub_path in path %}
+          {% if loop.last %}
+          <span class="breadcrumb-item active">{{ sub_path }}</span>
+          {% else %}
+          <a class="breadcrumb-item" href="#">{{ sub_path }}</a>
+          {% endif %}
+          {% endfor %}
+        </nav>
         <div class="table-responsive">
             <table class="table table-striped">
               <thead>
