@@ -6,13 +6,13 @@
           {% if split_path[0] == '' %}
             <li class="breadcrumb-item active">Home</li>
           {% else %}
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ breadcrumb_urls[0] }}">Home</a></li>
           {% endif %}
           {% for sub_path in split_path %}
             {% if loop.last %}
               <li class="breadcrumb-item active">{{ sub_path }}</li>
             {% else %}
-              <li class="breadcrumb-item"><a href="{{ sub_path }}">{{ sub_path }}</a></li>
+              <li class="breadcrumb-item"><a href="{{ breadcrumb_urls[loop.index] }}">{{ sub_path }}</a></li>
             {% endif %}
           {% endfor %}
         </ol>
