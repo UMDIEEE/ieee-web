@@ -1,4 +1,5 @@
 from IEEETestbankApp import app
+from IEEETestbankApp.models.auth import Config
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 import hmac
 import hashlib
