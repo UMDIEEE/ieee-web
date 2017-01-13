@@ -2,6 +2,11 @@
 {% block title %}Search{% endblock %}
 {% block content %}
         <h1>Browse the Testbank</h1>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="#">Library</a></li>
+          <li class="breadcrumb-item active">Data</li>
+        </ol>
         <nav class="breadcrumb">
           {% for sub_path in split_path %}
           {% if loop.last %}
