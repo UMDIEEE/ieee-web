@@ -128,8 +128,16 @@ def browse(path):
     print(files_list)
     
     template_kwargs = get_default_template_kwargs()
-    print(path.split('/'))
-    
+
+    browse_url = url_for('browse')
+    split_path = path.split('/')
+    breadcrumb_urls = []
+    breadcrumb_urls.append(browse_url)
+    for i in range(1,len(split_path)):
+        breadcrumb_urls.append(browse_url + '/'.join(split_path[:i]))
+    print(breadcrumb_urls)
+
+    bread_path = path
     return render_template('browse.html', split_path = path.split('/'),
         path = path, files = files_list, folders = folders_list,
         dirname = os.path.dirname, **template_kwargs)
