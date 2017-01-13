@@ -7,7 +7,7 @@
           {% if loop.last %}
           <span class="breadcrumb-item active">{{ sub_path }}</span>
           {% else %}
-          <a class="breadcrumb-item" href="#">{{ sub_path }}</a>
+          <a class="breadcrumb-item" href="{{ dirname(request.path) }}">{{ sub_path }}</a>
           {% endif %}
           {% endfor %}
         </nav>
