@@ -3,7 +3,7 @@
 {% block content %}
         <h1>Browse the Testbank</h1>
         <ol class="breadcrumb">
-          {% if split_path|length == 0 %}
+          {% if length(split_path) == 0 %}
             <li class="breadcrumb-item active">Home</li>
           {% else %}
             <li class="breadcrumb-item"><a href="#">Home</a></li>
