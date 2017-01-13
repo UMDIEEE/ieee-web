@@ -4,6 +4,13 @@ from flask import Flask, render_template, request, redirect, url_for,
 import hmac
 import hashlib
 import subprocess
+import os
+
+def pythonanywhere_touch(fname, mode=0o666, dir_fd=None, **kwargs):
+    flags = os.O_CREAT | os.O_APPEND
+    with os.fdopen(os.open(fname, flags=flags, mode=mode, dir_fd=dir_fd)) as f:
+        os.utime(f.fileno() if os.utime in os.supports_fd else fname,
+            dir_fd=None if os.supports_fd else dir_fd, **kwargs)
 
 # Compare the HMAC hash signature
 def verify_hmac_hash(data, signature):
@@ -40,6 +47,7 @@ def ghpayload():
                     cwd=os.path.dirname(os.path.realpath(__file__)),
                     stdout=subprocess.PIPE)
                 cmd_output, err = p.communicate()
+                pythonanywhere_touch(app.config['WSGI_CONFIG_FILE'])
                 return jsonify({'msg': str(cmd_output)})
     else:
         return jsonify({'msg': 'invalid hash'})
